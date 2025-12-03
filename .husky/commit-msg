@@ -1,0 +1,6 @@
+# Example Valid Commit Messages
+# feat: add login page
+# fix: resolve form validation error
+# chore: update dependencies
+# refactor: improve auth middleware
+npx pnpm commitlint --edit "$1"
