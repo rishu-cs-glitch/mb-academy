@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -39,12 +40,14 @@ export default function Home() {
           </a>
           <a
             className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] md:w-[158px] dark:border-white/[.145] dark:hover:bg-[#1a1a1a]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            href="/community"
             target="_blank"
             rel="noopener noreferrer"
           >
             Documentation
           </a>
+          <Link href={"/community"}>Community</Link>
+          {/* <Button onClick={() => }>Documentation</Button> */}
         </div>
       </main>
     </div>

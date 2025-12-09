@@ -1,0 +1,54 @@
+"use client";
+
+import type { FC } from "react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { AtSign, Link, Plus, Send, Smile } from "lucide-react";
+
+interface ChatInputProps {
+  onSend?: (message: string) => void;
+}
+
+const ChatInput: FC<ChatInputProps> = ({ onSend }) => {
+  const [value, setValue] = useState("");
+
+  const handleSend = () => {
+    if (!value.trim()) return;
+    onSend?.(value);
+    setValue("");
+  };
+
+  return (
+    <div className="bg-background m-4 rounded-md border">
+      <div className="rounded-md bg-[#F7F9FC]">
+        <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0">
+          <Plus className="h-4 w-4" />
+        </Button>
+        <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0">
+          <Link className="h-4 w-4" />
+        </Button>
+        <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0">
+          <Smile className="h-4 w-4" />
+        </Button>
+        <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0">
+          <AtSign className="h-4 w-4" />
+        </Button>
+      </div>
+      <div className="flex items-end gap-2 rounded-xl px-3 py-2">
+        <Textarea
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          placeholder="Type message"
+          className="max-h-[140px] min-h-8 w-full resize-none border-0 bg-transparent p-0 text-sm shadow-none focus-visible:ring-0"
+        />
+
+        <Button size="icon" className="h-8 w-8 bg-transparent" onClick={handleSend} disabled={!value.trim()}>
+          <Send className="h-8 w-8" color="#7F8DA4" />
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+export default ChatInput;
