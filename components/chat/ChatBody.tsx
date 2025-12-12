@@ -3,20 +3,13 @@
 import type { FC } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "../ui/button";
-import type { Channel, DirectMessageUser } from "@/types/community";
+import type { Channel, ChatMessage, DirectMessageUser } from "@/types/community";
 import { HashIcon } from "lucide-react";
 import { ScrollArea } from "../ui/scroll-area";
-
-interface Message {
-  id: string;
-  text: string;
-  sender: string;
-  timestamp: string;
-  isMe?: boolean;
-}
+import MessageItem from "./MessageItem";
 
 interface ChatBodyProps {
-  messages?: Message[];
+  messages?: ChatMessage[];
   selectedChat?: DirectMessageUser | Channel | null;
   chatType?: string;
   handleViewProfile?: () => void;
@@ -24,10 +17,10 @@ interface ChatBodyProps {
 
 const ChatBody: FC<ChatBodyProps> = ({ messages = [], chatType, selectedChat, handleViewProfile }) => {
   return (
-    <div className="bg-background flex h-fit flex-1 flex-col overflow-hidden">
+    <div className="flex h-full flex-1 flex-col overflow-hidden">
       {chatType === "directmessage" && (
         <div className="px-4 py-3">
-          <div className="bg-background sticky top-0 z-10 flex items-center gap-3 text-3xl">
+          <div className="bg-background sticky top-0 z-10 flex items-center gap-3 pt-6 text-3xl">
             <Avatar className="h-20 w-20">
               <AvatarImage src="" alt={(selectedChat as DirectMessageUser)?.name} />
               <AvatarFallback>{(selectedChat as DirectMessageUser)?.name?.charAt(0)}</AvatarFallback>
@@ -42,7 +35,10 @@ const ChatBody: FC<ChatBodyProps> = ({ messages = [], chatType, selectedChat, ha
               </div>
             </div>
           </div>
-          {/* {subTitle && <span className="text-muted-foreground text-xs">{subTitle}</span>} */}
+          <span className="text-sm text-gray-600">
+            Lorem ipsum dolor sit amet consectetur. Lacinia eget at leo nunc. Aliquam neque volutpat nunc mi sit justo
+            netus.
+          </span>
         </div>
       )}
       {chatType === "channel" && (
@@ -53,23 +49,25 @@ const ChatBody: FC<ChatBodyProps> = ({ messages = [], chatType, selectedChat, ha
               <span className="text-2xl font-bold">{(selectedChat as Channel).title}</span>
             </div>
           </div>
-          {/* {subTitle && <span className="text-muted-foreground text-xs">{subTitle}</span>} */}
         </div>
       )}
-      <ScrollArea className="flex-1 px-4 py-4">
-        <div className="flex flex-1 flex-col">
-          {messages?.length === 0 && (
-            <div className="flex flex-1 items-center justify-center">
-              <p className="text-center text-sm">
-                Start a conversation with{" "}
-                <span className="font-semibold">
-                  {(selectedChat as DirectMessageUser)?.name ?? (selectedChat as Channel)?.title ?? ""}
-                </span>
-              </p>
-            </div>
-          )}
+      {messages?.length === 0 && (
+        <div className="flex h-full flex-1 items-center justify-center">
+          <p className="mb-30 text-sm">
+            Start a conversation with{" "}
+            <span className="font-semibold">
+              {(selectedChat as DirectMessageUser)?.name ?? (selectedChat as Channel)?.title ?? ""}
+            </span>
+          </p>
         </div>
-      </ScrollArea>
+      )}
+      {messages.length > 0 && (
+        <ScrollArea className="h-full flex-1 py-4">
+          {messages.map((msg) => (
+            <MessageItem item={msg} key={msg.id} />
+          ))}
+        </ScrollArea>
+      )}
     </div>
   );
 };

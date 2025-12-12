@@ -13,11 +13,19 @@ type Props = {
   selectedChat?: Channel | DirectMessageUser | null;
   setSelectedType?: React.Dispatch<React.SetStateAction<"channel" | "directmessage">>;
   setSelectedChat?: React.Dispatch<React.SetStateAction<Channel | DirectMessageUser | null>>;
+  setSelectedProfile?: React.Dispatch<React.SetStateAction<boolean>>;
+  newChat?: () => void;
 };
-export default function DirectMessageList({ setSelectedType, selectedChat, setSelectedChat }: Props) {
+export default function DirectMessageList({
+  setSelectedType,
+  selectedChat,
+  setSelectedChat,
+  setSelectedProfile,
+  newChat,
+}: Props) {
   return (
     <div className="m-2">
-      <Accordion type="single" collapsible defaultValue="open">
+      <Accordion type="single" collapsible defaultValue="direct-messages">
         <AccordionItem value="direct-messages">
           <div className="flex items-center">
             <AccordionTrigger className="justify-start pb-2 text-sm font-semibold">Direct Message</AccordionTrigger>
@@ -28,12 +36,12 @@ export default function DirectMessageList({ setSelectedType, selectedChat, setSe
                     variant="ghost"
                     className="ml-auto flex cursor-pointer items-center rounded-md hover:bg-[#EBE7D6]"
                     size="icon-sm"
+                    onClick={newChat}
                   >
                     <PlusIcon className="h-4 w-4" />
                   </Button>
                 </TooltipTrigger>
 
-                {/* Custom colored tooltip */}
                 <TooltipContent className="border bg-[#EBE7D6] text-black" side="top">
                   New chat
                 </TooltipContent>
@@ -54,6 +62,7 @@ export default function DirectMessageList({ setSelectedType, selectedChat, setSe
                     onClick={() => {
                       setSelectedType && setSelectedType("directmessage");
                       setSelectedChat && setSelectedChat(user);
+                      setSelectedProfile && setSelectedProfile(false);
                     }}
                   >
                     <div className="relative">

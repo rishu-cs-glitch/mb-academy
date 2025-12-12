@@ -1,9 +1,9 @@
 "use client";
 
-import type { FC } from "react";
+import { type FC } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import type { DirectMessageUser } from "@/types/community";
-import { CrossIcon } from "lucide-react";
+import { Clock5, X } from "lucide-react";
 
 interface ChatProfileProps {
   profile?: DirectMessageUser | null;
@@ -12,20 +12,32 @@ interface ChatProfileProps {
 
 const ChatProfile: FC<ChatProfileProps> = ({ profile, handleClose }) => {
   return (
-    <div className="bg-background border-l px-4 py-3">
-      <div className="flex items-center justify-between">
-        <p className="text-2xl font-bold">Profile</p>
-        <CrossIcon onClick={handleClose} />
+    <div className="bg-background h-full w-80 rounded-r-md border-l px-6 py-4 shadow-lg">
+      <div className="mb-6 flex items-center justify-between">
+        <p className="text-2xl font-semibold">Profile</p>
+        <X onClick={handleClose} className="cursor-pointer" />
       </div>
-      <div className="items-center gap-3">
-        <Avatar className="h-38 w-38 rounded-full text-8xl">
+      <div className="flex flex-col items-center">
+        <Avatar className="mb-6 h-60 w-60 rounded-full text-8xl">
           <AvatarImage src="" alt={profile?.name} />
           <AvatarFallback>{profile?.name?.charAt(0)}</AvatarFallback>
         </Avatar>
-
-        <div className="flex flex-col">
-          <span className="text-base font-bold">{profile?.name}</span>
-          {profile?.isOnline && <span className="text-muted-foreground text-xs">Online</span>}
+        <div className="flex w-full flex-col gap-3">
+          <span className="text-lg font-bold">{profile?.name}</span>
+          {profile?.isOnline && (
+            <span className="flex gap-2 text-sm">
+              <span className="text-4xl leading-4 text-green-600">•</span> Active
+            </span>
+          )}
+          <span className="flex gap-2 text-sm">
+            <Clock5 size={"18"} /> GMT +5:00
+          </span>
+          <div className="flex flex-col gap-1">
+            <span className="font-semibold">Bio</span>
+            <span className="text-sm leading-relaxed">
+              Lorem ipsum dolor sit amet consectetur. Lacinia eget at leo nunc.
+            </span>
+          </div>
         </div>
       </div>
     </div>

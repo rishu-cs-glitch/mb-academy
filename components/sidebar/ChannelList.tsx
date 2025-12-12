@@ -12,11 +12,12 @@ type Props = {
   selectedChat?: Channel | DirectMessageUser | null;
   setSelectedType?: React.Dispatch<React.SetStateAction<"channel" | "directmessage">>;
   setSelectedChat?: React.Dispatch<React.SetStateAction<Channel | DirectMessageUser | null>>;
+  setSelectedProfile?: React.Dispatch<React.SetStateAction<boolean>>;
 };
-export default function ChannelList({ setSelectedType, selectedChat, setSelectedChat }: Props) {
+export default function ChannelList({ setSelectedType, selectedChat, setSelectedChat, setSelectedProfile }: Props) {
   return (
     <div className="m-2">
-      <Accordion type="single" collapsible>
+      <Accordion defaultValue="channels" type="single" collapsible>
         <AccordionItem value="channels">
           <AccordionTrigger className="min-w-2xs justify-start p-2 pb-2 text-sm font-semibold">
             Channels
@@ -33,6 +34,7 @@ export default function ChannelList({ setSelectedType, selectedChat, setSelected
                     onClick={() => {
                       setSelectedType && setSelectedType("channel");
                       setSelectedChat && setSelectedChat(channel);
+                      setSelectedProfile && setSelectedProfile(false);
                     }}
                   >
                     <Hash

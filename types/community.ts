@@ -19,10 +19,21 @@ export interface DirectMessageUser {
   roomId?: string;
 }
 
+export interface Reaction {
+  userId: string;
+  emoji: string;
+}
+
 export interface ChatMessage {
   id: string;
-  senderId: string;
+  parentId?: string | null;
+  userId: string;
+  name: string;
+  avatar: string;
   text: string;
   timestamp: string;
-  sender: string;
+  role: string;
+  reactions?: Reaction[];
+  threadCount?: number;
+  lastThreadReplyAt?: string;
 }

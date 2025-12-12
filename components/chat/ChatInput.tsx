@@ -8,9 +8,10 @@ import { AtSign, Link, Plus, Send, Smile } from "lucide-react";
 
 interface ChatInputProps {
   onSend?: (message: string) => void;
+  disable?: boolean;
 }
 
-const ChatInput: FC<ChatInputProps> = ({ onSend }) => {
+const ChatInput: FC<ChatInputProps> = ({ onSend, disable }) => {
   const [value, setValue] = useState("");
 
   const handleSend = () => {
@@ -22,16 +23,21 @@ const ChatInput: FC<ChatInputProps> = ({ onSend }) => {
   return (
     <div className="bg-background m-4 rounded-md border">
       <div className="rounded-md bg-[#F7F9FC]">
-        <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="ml-2 h-6 w-6 shrink-0 rounded-full bg-[#E1E9F4]"
+          disabled={disable}
+        >
           <Plus className="h-4 w-4" />
         </Button>
-        <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0">
+        <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0" disabled={disable}>
           <Link className="h-4 w-4" />
         </Button>
-        <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0">
+        <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0" disabled={disable}>
           <Smile className="h-4 w-4" />
         </Button>
-        <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0">
+        <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0" disabled={disable}>
           <AtSign className="h-4 w-4" />
         </Button>
       </div>
@@ -41,6 +47,7 @@ const ChatInput: FC<ChatInputProps> = ({ onSend }) => {
           onChange={(e) => setValue(e.target.value)}
           placeholder="Type message"
           className="max-h-[140px] min-h-8 w-full resize-none border-0 bg-transparent p-0 text-sm shadow-none focus-visible:ring-0"
+          disabled={disable}
         />
 
         <Button size="icon" className="h-8 w-8 bg-transparent" onClick={handleSend} disabled={!value.trim()}>
