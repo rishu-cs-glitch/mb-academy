@@ -14,6 +14,10 @@ export default function LoginPage() {
 
   const [showPassword, setShowPassword] = useState(false);
 
+  const siginPress = () => {
+    document.cookie = `token=123456; path=/;`;
+    router.replace("/dashboard");
+  };
   return (
     <div className="w-full">
       {/* Title */}
@@ -55,10 +59,7 @@ export default function LoginPage() {
           </Link>
         </div>
         <Button
-          onClick={() => {
-            document.cookie = `token=123456; path=/;`;
-            router.replace("/dashboard");
-          }}
+          onClick={siginPress}
           className="h-11 w-full bg-[#0F1828] text-white hover:bg-[#0F1828]/90"
         >
           Sign In

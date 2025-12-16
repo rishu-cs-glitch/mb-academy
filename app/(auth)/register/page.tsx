@@ -7,8 +7,10 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Eye, EyeOff, CheckCircle, XCircle } from "lucide-react";
 import SocialLogin from "@/components/auth/SocialLogin";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
+  const route = useRouter();
   const [showPwd, setShowPwd] = useState(false);
   const [showCPwd, setShowCPwd] = useState(false);
   const [password, setPassword] = useState("");
@@ -21,6 +23,12 @@ export default function RegisterPage() {
   const allValid = minChar && hasNumber && hasSpecial && password === confirmPwd;
 
   const validationStyle = (rule: boolean) => (rule ? "text-green-600" : "text-red-500");
+
+  const signUpClick = async () => {
+    // const email = "mohit@yopmai.com";
+    // route.replace(`/verify-email?email=${email}`);
+    route.replace("/verify-otp");
+  };
 
   return (
     <div className="w-full">
@@ -125,7 +133,9 @@ export default function RegisterPage() {
         </div>
 
         <Button
-          disabled={!allValid}
+          onClick={signUpClick}
+          disabled={false}
+          // disabled={!allValid}
           className={`h-11 w-full ${
             allValid
               ? "bg-[#0F1828] text-white hover:bg-[#0F1828]/90"
