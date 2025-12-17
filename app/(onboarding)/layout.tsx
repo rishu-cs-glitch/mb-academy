@@ -9,7 +9,12 @@ function Header() {
 
   return (
     <div className="flex justify-between items-center px-8 py-4">
-      <img src={WEB_IMAGES.APP_LOGO} className="h-8" />
+      {/* <img src={WEB_IMAGES.APP_LOGO} className="h-8" /> */}
+      {/* <div className="h-12 flex items-center justify-center ">
+       */}
+      <div>
+        <img src={WEB_IMAGES.MB_ACA} className="h-8 w-20" alt="Logo" />
+      </div>
 
       {onSkip ? (
         <button onClick={onSkip} className="text-sm border px-4 py-1 rounded-lg hover:bg-gray-100">
@@ -29,6 +34,7 @@ export default function OnboardingLayout({ children }: { children: React.ReactNo
     <OnboardingProvider>
       <div className="min-h-screen bg-[#F7F4EC] flex flex-col">
         <Header />
+
         <div className="flex justify-center mt-4 px-4">{children}</div>
       </div>
     </OnboardingProvider>

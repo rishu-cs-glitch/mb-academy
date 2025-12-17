@@ -69,7 +69,8 @@ export default function SetupProfilePage() {
   };
 
   const handleContinue = () => {
-    ((document.cookie = `token=123456; path=/;`), router.replace("/tutorial"));
+    // ((document.cookie = `token=123456; path=/;`),
+    router.replace("/tutorial");
   };
 
   // const router = useRouter();
@@ -78,7 +79,8 @@ export default function SetupProfilePage() {
     setConfig({
       skipLabel: "Skip",
       onSkip: () => {
-        ((document.cookie = `token=123456; path=/;`), router.replace("/tutorial"));
+        // ((document.cookie = `token=123456; path=/;`),
+        router.replace("/tutorial");
       },
     });
   }, []);

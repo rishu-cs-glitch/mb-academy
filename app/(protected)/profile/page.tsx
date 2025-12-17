@@ -3,6 +3,8 @@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Settings, Pencil } from "lucide-react";
 import WEB_IMAGES from "@/public";
+import { useState } from "react";
+import EditProfileDialog from "@/components/profile/EditProfileDialog";
 
 const badges = [
   { label: "Brainiac", icon: "🧠" },
@@ -14,6 +16,7 @@ const badges = [
 ];
 
 export default function ProfilePage() {
+  const [open, setOpen] = useState(false);
   return (
     <div className="w-full">
       {/* ================= HEADER ================= */}
@@ -53,7 +56,10 @@ export default function ProfilePage() {
                 </div>
               </div>
 
-              <Pencil className="cursor-pointer text-neutral-600 hover:text-black" />
+              <Pencil
+                onClick={() => setOpen(true)}
+                className="cursor-pointer text-neutral-600 hover:text-black"
+              />
             </div>
 
             {/* ---------- Profile Info ---------- */}
@@ -65,18 +71,18 @@ export default function ProfilePage() {
             </div>
 
             {/* ================= BADGES ================= */}
-            <div className="mt-8">
+            <div className="mt-8 ">
               <div className="flex items-center justify-between mb-3">
                 <h2 className="text-lg font-semibold">Badges</h2>
                 <button className="text-sm text-[#0F1828] underline">View all</button>
               </div>
 
-              <div className="border rounded-xl p-4">
+              <div className="border rounded-xl p-4 ">
                 <div className="flex gap-4 overflow-x-auto sm:grid sm:grid-cols-3 lg:grid-cols-6">
                   {badges.map((badge) => (
                     <div
                       key={badge.label}
-                      className="min-w-[140px] h-[120px] bg-[#F7F7FA] rounded-xl border shadow-sm flex flex-col items-center justify-center text-center gap-3"
+                      className="min-w-[140px] h-[120px] bg-[#F7F7FA] rounded-xl border shadow-sm flex flex-col items-center justify-center text-center gap-3 hover:scale-95"
                     >
                       <div className="w-10 h-10 rounded-full bg-white shadow flex items-center justify-center text-xl">
                         {badge.icon}
@@ -89,10 +95,10 @@ export default function ProfilePage() {
             </div>
 
             {/* ================= RANK & PROGRESS ================= */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10 ">
               {/* Rank */}
-              <div className="p-6 bg-white rounded-xl shadow">
-                <h2 className="text-lg font-semibold">Rank</h2>
+              <div className="p-6 bg-white rounded-xl shadow ">
+                <h2 className="text-lg font-semibold ">Rank</h2>
 
                 <p className="mt-4 font-semibold">#15 This Week</p>
                 <p className="text-xs text-green-600">+2 since last week</p>
@@ -109,10 +115,10 @@ export default function ProfilePage() {
               </div>
 
               {/* Progress */}
-              <div className="p-6 bg-white rounded-xl shadow">
+              <div className="p-6 bg-white rounded-xl shadow ">
                 <h2 className="text-lg font-semibold mb-4">Course Progress</h2>
 
-                <div className="w-36 h-36 mx-auto rounded-full border-[10px] border-gray-300 relative">
+                <div className="w-36 h-36 mx-auto rounded-full border-[10px] border-gray-300 relative ">
                   <div className="absolute inset-0 rounded-full border-[10px] border-[#0F1828] border-l-transparent"></div>
                   <div className="absolute inset-0 flex items-center justify-center text-xl font-bold">
                     12
@@ -125,6 +131,7 @@ export default function ProfilePage() {
           </div>
         </Tabs>
       </div>
+      <EditProfileDialog open={open} onClose={() => setOpen(false)} />
     </div>
   );
 }
