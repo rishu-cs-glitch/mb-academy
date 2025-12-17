@@ -15,7 +15,12 @@ interface ChatBodyProps {
   handleViewProfile?: () => void;
 }
 
-const ChatBody: FC<ChatBodyProps> = ({ messages = [], chatType, selectedChat, handleViewProfile }) => {
+const ChatBody: FC<ChatBodyProps> = ({
+  messages = [],
+  chatType,
+  selectedChat,
+  handleViewProfile,
+}) => {
   return (
     <div className="flex h-full flex-1 flex-col overflow-hidden">
       {chatType === "directmessage" && (
@@ -23,21 +28,30 @@ const ChatBody: FC<ChatBodyProps> = ({ messages = [], chatType, selectedChat, ha
           <div className="bg-background sticky top-0 z-10 flex items-center gap-3 pt-6 text-3xl">
             <Avatar className="h-20 w-20">
               <AvatarImage src="" alt={(selectedChat as DirectMessageUser)?.name} />
-              <AvatarFallback>{(selectedChat as DirectMessageUser)?.name?.charAt(0)}</AvatarFallback>
+              <AvatarFallback>
+                {(selectedChat as DirectMessageUser)?.name?.charAt(0)}
+              </AvatarFallback>
             </Avatar>
 
             <div className="flex flex-col justify-around">
-              <span className="text-2xl font-bold">{(selectedChat as DirectMessageUser)?.name}</span>
+              <span className="text-2xl font-bold">
+                {(selectedChat as DirectMessageUser)?.name}
+              </span>
               <div>
-                <Button variant="ghost" className="border border-[#15243B]" size={"sm"} onClick={handleViewProfile}>
+                <Button
+                  variant="ghost"
+                  className="border border-[#15243B]"
+                  size={"sm"}
+                  onClick={handleViewProfile}
+                >
                   View Profile
                 </Button>
               </div>
             </div>
           </div>
           <span className="text-sm text-gray-600">
-            Lorem ipsum dolor sit amet consectetur. Lacinia eget at leo nunc. Aliquam neque volutpat nunc mi sit justo
-            netus.
+            Lorem ipsum dolor sit amet consectetur. Lacinia eget at leo nunc. Aliquam neque volutpat
+            nunc mi sit justo netus.
           </span>
         </div>
       )}

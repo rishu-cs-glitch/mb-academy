@@ -16,7 +16,12 @@ interface ChatHeaderProps {
   onClickDelete?: () => void;
 }
 
-const ChatHeader: FC<ChatHeaderProps> = ({ selectedChat, selectedType, onClickDelete, onClickReport }) => {
+const ChatHeader: FC<ChatHeaderProps> = ({
+  selectedChat,
+  selectedType,
+  onClickDelete,
+  onClickReport,
+}) => {
   return (
     <div className="bg-background w-full rounded-tr-md border-b px-4 pt-6 pb-3">
       <div className="flex items-center justify-between">
@@ -33,11 +38,15 @@ const ChatHeader: FC<ChatHeaderProps> = ({ selectedChat, selectedType, onClickDe
           <div className="flex items-center gap-3">
             <Avatar className="h-10 w-10 rounded-full">
               <AvatarImage src="" alt={(selectedChat as DirectMessageUser)?.name} />
-              <AvatarFallback>{(selectedChat as DirectMessageUser)?.name?.charAt(0)}</AvatarFallback>
+              <AvatarFallback>
+                {(selectedChat as DirectMessageUser)?.name?.charAt(0)}
+              </AvatarFallback>
             </Avatar>
 
             <div className="flex flex-col">
-              <span className="text-base font-bold">{(selectedChat as DirectMessageUser)?.name}</span>
+              <span className="text-base font-bold">
+                {(selectedChat as DirectMessageUser)?.name}
+              </span>
               {(selectedChat as DirectMessageUser)?.isOnline && (
                 <span className="text-muted-foreground text-xs">Online</span>
               )}

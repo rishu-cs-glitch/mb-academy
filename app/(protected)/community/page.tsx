@@ -15,7 +15,9 @@ import React, { useState } from "react";
 const userId = "u1";
 
 export default function Page() {
-  const [selectedType, setSelectedType] = React.useState<"channel" | "directmessage">("directmessage");
+  const [selectedType, setSelectedType] = React.useState<"channel" | "directmessage">(
+    "directmessage"
+  );
   const [selectedChat, setSelectedChat] = React.useState<Channel | DirectMessageUser | null>(null);
   const [selectedProfile, setSelectedProfile] = React.useState<boolean>(false);
   const [newChat, setNewChat] = React.useState<boolean>(false);
@@ -64,7 +66,7 @@ export default function Page() {
       <div
         className={cn(
           "flex flex-1 flex-col overflow-hidden rounded-r-md bg-white shadow-lg",
-          selectedProfile && "rounded-r-none",
+          selectedProfile && "rounded-r-none"
         )}
       >
         {selectedChat ? (
@@ -100,7 +102,10 @@ export default function Page() {
         )}
       </div>
       {selectedProfile && (
-        <ChatProfile profile={selectedChat as DirectMessageUser} handleClose={() => setSelectedProfile(false)} />
+        <ChatProfile
+          profile={selectedChat as DirectMessageUser}
+          handleClose={() => setSelectedProfile(false)}
+        />
       )}
     </div>
   );

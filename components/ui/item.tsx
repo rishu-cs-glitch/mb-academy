@@ -7,12 +7,24 @@ import { Separator } from "@/components/ui/separator";
 
 function ItemGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <div role="list" data-slot="item-group" className={cn("group/item-group flex flex-col", className)} {...props} />
+    <div
+      role="list"
+      data-slot="item-group"
+      className={cn("group/item-group flex flex-col", className)}
+      {...props}
+    />
   );
 }
 
 function ItemSeparator({ className, ...props }: React.ComponentProps<typeof Separator>) {
-  return <Separator data-slot="item-separator" orientation="horizontal" className={cn("my-0", className)} {...props} />;
+  return (
+    <Separator
+      data-slot="item-separator"
+      orientation="horizontal"
+      className={cn("my-0", className)}
+      {...props}
+    />
+  );
 }
 
 const itemVariants = cva(
@@ -21,7 +33,6 @@ const itemVariants = cva(
     variants: {
       variant: {
         default: "bg-transparent",
-        outline: "border-border",
         muted: "bg-muted/50",
       },
       size: {
@@ -33,7 +44,7 @@ const itemVariants = cva(
       variant: "default",
       size: "default",
     },
-  },
+  }
 );
 
 function Item({
@@ -68,7 +79,7 @@ const itemMediaVariants = cva(
     defaultVariants: {
       variant: "default",
     },
-  },
+  }
 );
 
 function ItemMedia({
@@ -113,7 +124,7 @@ function ItemDescription({ className, ...props }: React.ComponentProps<"p">) {
       className={cn(
         "text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance",
         "[&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4",
-        className,
+        className
       )}
       {...props}
     />
@@ -121,7 +132,9 @@ function ItemDescription({ className, ...props }: React.ComponentProps<"p">) {
 }
 
 function ItemActions({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="item-actions" className={cn("flex items-center gap-2", className)} {...props} />;
+  return (
+    <div data-slot="item-actions" className={cn("flex items-center gap-2", className)} {...props} />
+  );
 }
 
 function ItemHeader({ className, ...props }: React.ComponentProps<"div">) {

@@ -58,7 +58,9 @@ export function CustomDialog({
         <DialogHeader>
           <DialogTitle className="text-center">{title}</DialogTitle>
         </DialogHeader>
-        <DialogDescription className="font-semibold text-[#1F2937]">{description}</DialogDescription>
+        <DialogDescription className="font-semibold text-[#1F2937]">
+          {description}
+        </DialogDescription>
         <AlertDialogFooter className="mt-4 flex gap-3">
           <Button variant="outline" className="flex flex-1 border-[#15243B]">
             {cancelText}

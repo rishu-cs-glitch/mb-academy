@@ -29,7 +29,9 @@ const MessageItem: FC<MessageItemProps> = ({ item }) => {
       <div>
         <div className="flex items-center gap-2">
           <p className="text-md font-medium text-[#1F2937]">{item.name}</p>
-          {item.role === "Admin" && <p className="text-sm font-normal text-[#9DA8B9]">{item.role}</p>}
+          {item.role === "Admin" && (
+            <p className="text-sm font-normal text-[#9DA8B9]">{item.role}</p>
+          )}
           <span className="text-xs font-normal text-[#1F2937]">
             {new Date(item.timestamp)
               .toLocaleTimeString("en-US", {
@@ -53,7 +55,9 @@ const MessageItem: FC<MessageItemProps> = ({ item }) => {
           </div>
         )}
         <div className="mt-1 flex gap-2">
-          {Number(item?.threadCount) > 0 && <Button variant="link">{item.threadCount} Reply</Button>}
+          {Number(item?.threadCount) > 0 && (
+            <Button variant="link">{item.threadCount} Reply</Button>
+          )}
         </div>
       </div>
     </div>

@@ -50,7 +50,12 @@ const ChatInput: FC<ChatInputProps> = ({ onSend, disable }) => {
           disabled={disable}
         />
 
-        <Button size="icon" className="h-8 w-8 bg-transparent" onClick={handleSend} disabled={!value.trim()}>
+        <Button
+          size="icon"
+          className="h-8 w-8 bg-transparent"
+          onClick={handleSend}
+          disabled={!value.trim()}
+        >
           <Send className="h-8 w-8" color="#7F8DA4" />
         </Button>
       </div>

@@ -28,7 +28,9 @@ export default function DirectMessageList({
       <Accordion type="single" collapsible defaultValue="direct-messages">
         <AccordionItem value="direct-messages">
           <div className="flex items-center">
-            <AccordionTrigger className="justify-start pb-2 text-sm font-semibold">Direct Message</AccordionTrigger>
+            <AccordionTrigger className="justify-start pb-2 text-sm font-semibold">
+              Direct Message
+            </AccordionTrigger>
             <TooltipProvider delayDuration={200}>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -57,7 +59,8 @@ export default function DirectMessageList({
                     key={user.id}
                     variant="ghost"
                     className={`flex w-full items-center justify-start gap-3 px-2 py-2 text-sm hover:bg-[#EBE7D6] ${
-                      selectedChat?.id === user.id && "bg-[#15243B] text-white hover:bg-[#15243B] hover:text-white"
+                      selectedChat?.id === user.id &&
+                      "bg-[#15243B] text-white hover:bg-[#15243B] hover:text-white"
                     }`}
                     onClick={() => {
                       setSelectedType && setSelectedType("directmessage");
@@ -68,7 +71,9 @@ export default function DirectMessageList({
                     <div className="relative">
                       <Avatar className="h-6 w-6">
                         <AvatarImage src={user.avatar} />
-                        <AvatarFallback className="text-[#15243B]">{user.name.charAt(0)}</AvatarFallback>
+                        <AvatarFallback className="text-[#15243B]">
+                          {user.name.charAt(0)}
+                        </AvatarFallback>
                       </Avatar>
 
                       {user.isOnline && (

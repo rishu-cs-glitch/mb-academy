@@ -38,10 +38,18 @@ export function ReportDialog({ onClickReport }: ReportDialogProps) {
           <DialogHeader>
             <DialogTitle>Report</DialogTitle>
           </DialogHeader>
-          <DialogDescription className="font-semibold text-[#1F2937]">Reason for reporting?</DialogDescription>
+          <DialogDescription className="font-semibold text-[#1F2937]">
+            Reason for reporting?
+          </DialogDescription>
           <div className="grid gap-4">
             <RadioGroup value={reason} onValueChange={setReason} className="space-y-1">
-              {["Spam Content", "Harassment/Abuse", "Inappropriate Content", "Misinformation", "Other"].map((item) => (
+              {[
+                "Spam Content",
+                "Harassment/Abuse",
+                "Inappropriate Content",
+                "Misinformation",
+                "Other",
+              ].map((item) => (
                 <div className="flex items-center space-x-3" key={item}>
                   <RadioGroupItem className="border-2 border-[#15243B]" value={item} id={item} />
                   <Label htmlFor={item} className="text-sm">

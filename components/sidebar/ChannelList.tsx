@@ -14,7 +14,12 @@ type Props = {
   setSelectedChat?: React.Dispatch<React.SetStateAction<Channel | DirectMessageUser | null>>;
   setSelectedProfile?: React.Dispatch<React.SetStateAction<boolean>>;
 };
-export default function ChannelList({ setSelectedType, selectedChat, setSelectedChat, setSelectedProfile }: Props) {
+export default function ChannelList({
+  setSelectedType,
+  selectedChat,
+  setSelectedChat,
+  setSelectedProfile,
+}: Props) {
   return (
     <div className="m-2">
       <Accordion defaultValue="channels" type="single" collapsible>
