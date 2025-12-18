@@ -25,7 +25,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <div className="h-screen flex overflow-hidden bg-[#F8F7F2]">
       {/* SIDEBAR (NO SCROLL EVER) */}
-      <aside className="w-16 h-screen bg-white shadow-lg flex flex-col items-center py-4">
+      <aside className="w-16 h-screen bg-[#F8F7F2] flex flex-col items-center py-4">
         {/* LOGO */}
         <div className="h-12 flex items-center justify-center mb-6">
           <img src={WEB_IMAGES.MB_LOGO} alt="Logo" className="h-8 w-8 object-contain" />
@@ -36,7 +36,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           {menu.map((item) => (
             <button
               key={item.path}
-              onClick={() => router.push(item.path)}
+              onClick={() => {
+                console.log("Navigating to:", item.path);
+                router.push(item.path);
+              }}
               className={`p-3 rounded-lg transition ${
                 pathname === item.path ? "bg-black text-white" : "text-black hover:bg-gray-200"
               }`}
@@ -56,7 +59,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       </aside>
 
       {/* MAIN CONTENT (ONLY THIS SCROLLS) */}
-      <main className="flex-1 overflow-y-auto p-6">{children}</main>
+      <main className="flex-1 overflow-y-auto p-2">{children}</main>
     </div>
   );
 }

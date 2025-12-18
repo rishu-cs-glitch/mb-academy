@@ -8,7 +8,6 @@ export function proxy(request: NextRequest) {
   const publicRoutes = [
     "/",
     "/welcome",
-    "/community",
     "/login",
     "/register",
     "/forgot-password",
