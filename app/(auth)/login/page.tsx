@@ -1,84 +1,3 @@
-// "use client";
-
-// import { useState } from "react";
-// import { Input } from "@/components/ui/input";
-// import { Label } from "@/components/ui/label";
-// import { Button } from "@/components/ui/button";
-// import Link from "next/link";
-// import { Eye, EyeOff } from "lucide-react";
-// import { useRouter } from "next/navigation";
-// import SocialLogin from "@/components/auth/SocialLogin";
-
-// export default function LoginPage() {
-//   const router = useRouter();
-
-//   const [showPassword, setShowPassword] = useState(false);
-
-//   const siginPress = () => {
-//     document.cookie = `token=123456; path=/;`;
-//     router.replace("/dashboard");
-//   };
-//   return (
-//     <div className="w-full">
-//       {/* Title */}
-//       <h2 className="text-2xl font-bold text-[#0F1828]">Sign In to MB Academy</h2>
-//       <p className="mt-2 text-sm text-neutral-600">Access your courses, community and events.</p>
-
-//       <div className="mt-10 space-y-5">
-//         <div className="space-y-2">
-//           <Label className="text-sm text-[#0F1828]">Email Address</Label>
-//           <Input
-//             placeholder="Enter your email"
-//             className="h-11 border-neutral-300 text-[#0F1828] placeholder-neutral-400 focus-visible:ring-[#0F1828]"
-//           />
-//         </div>
-
-//         <div className="space-y-2">
-//           <Label className="text-sm text-[#0F1828]">Password</Label>
-
-//           <div className="relative">
-//             <Input
-//               type={showPassword ? "text" : "password"}
-//               placeholder="Enter your password"
-//               className="h-11 border-neutral-300 pr-10 text-[#0F1828] placeholder-neutral-400 focus-visible:ring-[#0F1828]"
-//             />
-//             <button
-//               type="button"
-//               className="absolute inset-y-0 right-3 flex items-center text-neutral-500 hover:text-[#0F1828]"
-//               onClick={() => setShowPassword(!showPassword)}
-//             >
-//               {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-//             </button>
-//           </div>
-
-//           <Link
-//             href="/forgot-password"
-//             className="block text-right text-xs text-[#0F1828] hover:underline"
-//           >
-//             Forgot Password?
-//           </Link>
-//         </div>
-//         <Button
-//           onClick={siginPress}
-//           className="h-11 w-full bg-[#0F1828] text-white hover:bg-[#0F1828]/90"
-//         >
-//           Sign In
-//         </Button>
-
-//         <div className="text-center text-sm text-neutral-500">or</div>
-
-//         <SocialLogin />
-
-//         <p className="text-center text-sm text-neutral-600">
-//           Don’t have an account?
-//           <Link href="/register" className="ml-1 font-semibold text-[#0F1828] hover:underline">
-//             Create Account
-//           </Link>
-//         </p>
-//       </div>
-//     </div>
-//   );
-// }
 "use client";
 
 import { useState } from "react";
@@ -89,9 +8,13 @@ import Link from "next/link";
 import { Eye, EyeOff, CheckCircle, XCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import SocialLogin from "@/components/auth/SocialLogin";
+import { useLogin } from "@/core/queries/auth.queries";
+import { useAuthStore } from "@/core/store/auth.store";
 
 export default function LoginPage() {
   const router = useRouter();
+  const { mutate, isPending } = useLogin();
+  const setEmailForOtp = useAuthStore((s) => s.setEmailForOtp);
 
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
@@ -112,13 +35,37 @@ export default function LoginPage() {
   const signInPress = () => {
     if (!allValid) return;
 
-    // ✅ mock login success
-    document.cookie = `token=123456; path=/;`;
-    router.replace("/dashboard");
+    mutate(
+      {
+        email,
+        password,
+      },
+      {
+        onSuccess: (res: any) => {
+          // ✅ LOGIN SUCCESS
+          if (res?.token) {
+            document.cookie = `token=${res.token}; path=/;`;
+            router.replace("/dashboard");
+          }
+        },
+        onError: (err: any) => {
+          /**
+           * 🔥 Backend special case:
+           * emailVerificationRequired = true
+           */
+          if (err?.emailVerificationRequired) {
+            setEmailForOtp(email);
+            router.replace("/verify-otp");
+          } else {
+            alert(err?.message || "Login failed");
+          }
+        },
+      }
+    );
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full justify-center h-full max-w-md mt-20 mb-20">
       {/* TITLE */}
       <h2 className="text-2xl font-bold text-[#0F1828]">Sign In</h2>
       <p className="mt-2 text-sm text-neutral-600">Access your courses, community and events.</p>
@@ -131,7 +78,7 @@ export default function LoginPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email"
-            className={`h-11 ${
+            className={`h-11 mt-1 ${
               email.length > 0 && !isValidEmail(email) ? "border-red-500" : "border-neutral-300"
             }`}
           />
@@ -148,13 +95,13 @@ export default function LoginPage() {
 
             <div className="flex gap-1">
               <span
-                className={`h-1.5 w-4 rounded-full ${minChar ? "bg-[#23ca2e]" : "bg-neutral-300"}`}
+                className={`h-1.5 w-6 rounded-full ${minChar ? "bg-[#23ca2e]" : "bg-neutral-300"}`}
               ></span>
               <span
-                className={`h-1.5 w-4 rounded-full ${hasNumber ? "bg-[#23ca2e]" : "bg-neutral-300"}`}
+                className={`h-1.5 w-6 rounded-full ${hasNumber ? "bg-[#23ca2e]" : "bg-neutral-300"}`}
               ></span>
               <span
-                className={`h-1.5 w-4 rounded-full ${hasSpecial ? "bg-[#23ca2e]" : "bg-neutral-300"}`}
+                className={`h-1.5 w-6 rounded-full ${hasSpecial ? "bg-[#23ca2e]" : "bg-neutral-300"}`}
               ></span>
             </div>
           </div>
@@ -183,18 +130,24 @@ export default function LoginPage() {
           {/* 🔥 REGISTER-LIKE PASSWORD VALIDATION */}
           {password.length > 0 && (
             <div className="space-y-1 text-xs">
-              <p className={`flex items-center gap-2 ${validationStyle(minChar)}`}>
-                {minChar ? <CheckCircle size={14} /> : <XCircle size={14} />}
+              <p
+                className={`flex items-center gap-2   text-sm font-medium ${validationStyle(minChar)}`}
+              >
+                {minChar ? <CheckCircle size={16} /> : <XCircle size={16} />}
                 Minimum 8 characters
               </p>
 
-              <p className={`flex items-center gap-2 ${validationStyle(hasNumber)}`}>
-                {hasNumber ? <CheckCircle size={14} /> : <XCircle size={14} />}
+              <p
+                className={`flex items-center gap-2  text-sm font-medium ${validationStyle(hasNumber)}`}
+              >
+                {hasNumber ? <CheckCircle size={16} /> : <XCircle size={16} />}
                 At least 1 number
               </p>
 
-              <p className={`flex items-center gap-2 ${validationStyle(hasSpecial)}`}>
-                {hasSpecial ? <CheckCircle size={14} /> : <XCircle size={14} />}
+              <p
+                className={`flex items-center gap-2  text-sm font-medium ${validationStyle(hasSpecial)}`}
+              >
+                {hasSpecial ? <CheckCircle size={16} /> : <XCircle size={16} />}
                 One special character
               </p>
             </div>
@@ -202,7 +155,7 @@ export default function LoginPage() {
 
           <Link
             href="/forgot-password"
-            className="block text-right text-xs text-[#0F1828] hover:underline"
+            className="block text-right text-xm hover:font-medium text-[#0F1828] hover:underline"
           >
             Forgot Password?
           </Link>
@@ -211,14 +164,14 @@ export default function LoginPage() {
         {/* SUBMIT */}
         <Button
           onClick={signInPress}
-          disabled={!allValid}
+          disabled={!allValid || isPending}
           className={`h-11 w-full ${
             allValid
               ? "bg-[#0F1828] text-white hover:bg-[#0F1828]/90"
               : "bg-neutral-300 text-neutral-500"
           }`}
         >
-          Sign In
+          {isPending ? "Signing in..." : "Sign In"}
         </Button>
 
         <div className="text-center text-sm text-neutral-500">or</div>

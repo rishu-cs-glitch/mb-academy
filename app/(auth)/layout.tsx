@@ -18,7 +18,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         transition-all duration-100 hover:scale-95"
           />
         </div>
-        <div className="relative flex h-full min-h-screen   justify-center rounded-3xl bg-white shadow-2xl lg:min-h-full lg:p-12 sm:p-8 p-6 ">
+        <div className="relative flex h-full min-h-screen  sm:w-2xl justify-center rounded-3xl bg-white shadow-2xl lg:min-h-full lg:p-12 sm:p-8 p-6 ">
           <div className="w-[80%] max-w-xl">{children}</div>
         </div>
       </div>

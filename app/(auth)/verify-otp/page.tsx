@@ -3,9 +3,15 @@
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/core/store/auth.store";
+import { useVerifyOtp } from "@/core/queries/auth.queries";
 
 export default function VerifyOtpPage() {
   const router = useRouter();
+  const { mutate, isPending } = useVerifyOtp();
+
+  const email = useAuthStore((s) => s.emailForOtp);
+
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [error, setError] = useState("");
   const inputRefs = useRef<HTMLInputElement[]>([]);
@@ -29,19 +35,50 @@ export default function VerifyOtpPage() {
     }
   };
 
+  // const verifyOtp = () => {
+  //   const code = otp.join("");
+
+  //   if (code.length !== 6) {
+  //     setError("Please enter all 6 digits of the OTP");
+  //     return;
+  //   }
+  //   // if (res.data.needsProfileSetup) {
+  //   router.replace("/profile-setup");
+  //   // } else {
+  //   //   router.replace("/dashboard");
+  //   // }
+  //   console.log("Verified OTP:", code);
+  // };
   const verifyOtp = () => {
     const code = otp.join("");
-
+    // if (!email) {
+    //   router.replace("/register"); // safety fallback
+    // }
     if (code.length !== 6) {
       setError("Please enter all 6 digits of the OTP");
       return;
     }
-    // if (res.data.needsProfileSetup) {
-    router.replace("/profile-setup");
-    // } else {
-    //   router.replace("/dashboard");
-    // }
-    console.log("Verified OTP:", code);
+
+    mutate(
+      {
+        otp: code,
+        email: email || "", // (agar backend ko chahiye)
+      },
+      {
+        onSuccess: (res: any) => {
+          console.log("res---verify otp res--", JSON.stringify(res));
+          // 🔑 Backend response ke basis par route
+          if (res?.needsProfileSetup) {
+            router.replace("/profile-setup");
+          } else {
+            router.replace("/dashboard");
+          }
+        },
+        onError: (err: any) => {
+          setError(err?.message || "Invalid or expired OTP");
+        },
+      }
+    );
   };
 
   return (
@@ -81,11 +118,11 @@ export default function VerifyOtpPage() {
       {/* Verify Button */}
       <Button
         onClick={verifyOtp}
+        disabled={isPending}
         className="w-full h-11 mt-8 bg-[#0F1828] text-white hover:bg-[#0F1828]/90"
       >
-        Verify
+        {isPending ? "Verifying..." : "Verify"}
       </Button>
-
       {/* Resend */}
       <p className="mt-4 text-sm text-neutral-600 text-center">
         Didn’t receive the code?
