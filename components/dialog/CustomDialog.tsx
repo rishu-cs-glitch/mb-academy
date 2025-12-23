@@ -2,6 +2,7 @@
 
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -62,12 +63,16 @@ export function CustomDialog({
           {description}
         </DialogDescription>
         <AlertDialogFooter className="mt-4 flex gap-3">
-          <Button variant="outline" className="flex flex-1 border-[#15243B]">
-            {cancelText}
-          </Button>
-          <Button onClick={onConfirm} className="flex flex-1 bg-[#15243B] text-white">
-            {confirmText}
-          </Button>
+          <DialogClose asChild>
+            <Button variant="outline" className="flex flex-1 border-[#15243B]">
+              {cancelText}
+            </Button>
+          </DialogClose>
+          <DialogClose asChild>
+            <Button onClick={onConfirm} className="flex flex-1 bg-[#15243B] text-white">
+              {confirmText}
+            </Button>
+          </DialogClose>
         </AlertDialogFooter>
       </DialogContent>
     </Dialog>

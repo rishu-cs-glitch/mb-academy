@@ -76,7 +76,7 @@ const ChatBody: FC<ChatBodyProps> = ({
         </div>
       )}
       {messages.length > 0 && (
-        <ScrollArea className="h-full flex-1 py-4">
+        <ScrollArea className="h-full flex-1 pb-4 pt-4">
           {messages.map((msg) => (
             <MessageItem item={msg} key={msg.id} />
           ))}
