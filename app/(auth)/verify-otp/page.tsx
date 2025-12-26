@@ -14,7 +14,7 @@ export default function VerifyOtpPage() {
 
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [error, setError] = useState("");
-  const inputRefs = useRef<HTMLInputElement[]>([]);
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const handleChange = (value: string, index: number) => {
     if (!/^\d*$/.test(value)) return;
@@ -98,7 +98,7 @@ export default function VerifyOtpPage() {
             type="text"
             maxLength={1}
             value={digit}
-            ref={(el) => (inputRefs.current[i] = el!)}
+            ref={(el) => void (inputRefs.current[i] = el)}
             onChange={(e) => handleChange(e.target.value, i)}
             onKeyDown={(e) => handleKeyDown(e, i)}
             className={`w-12 h-12 rounded-md text-center text-lg 
