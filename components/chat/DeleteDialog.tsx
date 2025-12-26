@@ -28,7 +28,7 @@ export function DeleteDialog({ onClickDelete }: DeleteDialogProps) {
           Delete Chat
         </Button>
       </DialogTrigger>
-      <DialogContent showCloseButton={false} className="text-center sm:max-w-[425px]">
+      <DialogContent showCloseButton={false} className="text-center sm:max-w-106.25">
         <div className="mx-auto flex items-center justify-center rounded-full">
           <LogOut className="flex h-24 w-24 self-center" color="red" />
         </div>
