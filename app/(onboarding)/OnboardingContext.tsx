@@ -19,7 +19,7 @@ const OnboardingContext = createContext<OnboardingContextType | null>(null);
 export function OnboardingProvider({ children }: { children: React.ReactNode }) {
   const [config, setConfig] = useState<OnboardingConfig>({
     skipLabel: "Skip",
-    onSkip: null,
+    onSkip: () => {},
   });
 
   return (

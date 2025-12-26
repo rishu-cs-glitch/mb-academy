@@ -57,7 +57,7 @@ export default function SetupProfilePage() {
 
   const handleCropDone = async () => {
     if (!imagePreview || !croppedAreaPixels) return;
-    const img = await getCroppedImg(imagePreview, croppedAreaPixels, rotation);
+    const img = await getCroppedImg(imagePreview, croppedAreaPixels);
     setCroppedImage(img);
     setCropMode(false);
   };

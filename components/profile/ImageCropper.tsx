@@ -43,7 +43,7 @@ export default function ImageCropper({ value, onChange }: Props) {
   const handleCropDone = async () => {
     if (!imagePreview || !croppedAreaPixels) return;
 
-    const img = await getCroppedImg(imagePreview, croppedAreaPixels, rotation);
+    const img = await getCroppedImg(imagePreview, croppedAreaPixels);
     onChange(img);
     setCropMode(false);
   };

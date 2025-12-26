@@ -37,7 +37,7 @@ export default function DirectMessageList({
                   <Button
                     variant="ghost"
                     className="ml-auto flex cursor-pointer items-center rounded-md hover:bg-[#EBE7D6]"
-                    size="icon-sm"
+                    size="sm"
                     onClick={newChat}
                   >
                     <PlusIcon className="h-4 w-4" />
