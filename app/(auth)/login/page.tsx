@@ -9,12 +9,11 @@ import { Eye, EyeOff, CheckCircle, XCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import SocialLogin from "@/components/auth/SocialLogin";
 import { useLogin } from "@/core/queries/auth.queries";
-import { useAuthStore } from "@/core/store/auth.store";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { mutate, isPending } = useLogin();
-  const setEmailForOtp = useAuthStore((s) => s.setEmailForOtp);
+  const { isPending } = useLogin();
+  // const setEmailForOtp = useAuthStore((s) => s.setEmailForOtp);
 
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
@@ -34,34 +33,35 @@ export default function LoginPage() {
   // ---------- SUBMIT ----------
   const signInPress = () => {
     if (!allValid) return;
+    router.replace("/dashboard");
 
-    mutate(
-      {
-        email,
-        password,
-      },
-      {
-        onSuccess: (res: any) => {
-          // ✅ LOGIN SUCCESS
-          if (res?.token) {
-            document.cookie = `token=${res.token}; path=/;`;
-            router.replace("/dashboard");
-          }
-        },
-        onError: (err: any) => {
-          /**
-           * 🔥 Backend special case:
-           * emailVerificationRequired = true
-           */
-          if (err?.emailVerificationRequired) {
-            setEmailForOtp(email);
-            router.replace("/verify-otp");
-          } else {
-            alert(err?.message || "Login failed");
-          }
-        },
-      }
-    );
+    // mutate(
+    //   {
+    //     email,
+    //     password,
+    //   },
+    //   {
+    //     onSuccess: (res: any) => {
+    //       // ✅ LOGIN SUCCESS
+    //       if (res?.token) {
+    //         document.cookie = `token=${res.token}; path=/;`;
+    //         router.replace("/dashboard");
+    //       }
+    //     },
+    //     onError: (err: any) => {
+    //       /**
+    //        * 🔥 Backend special case:
+    //        * emailVerificationRequired = true
+    //        */
+    //       if (err?.emailVerificationRequired) {
+    //         setEmailForOtp(email);
+    //         router.replace("/verify-otp");
+    //       } else {
+    //         alert(err?.message || "Login failed");
+    //       }
+    //     },
+    //   }
+    // );
   };
 
   return (

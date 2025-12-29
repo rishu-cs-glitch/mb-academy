@@ -9,7 +9,6 @@ import { Eye, EyeOff, CheckCircle, XCircle } from "lucide-react";
 import SocialLogin from "@/components/auth/SocialLogin";
 import { useRouter } from "next/navigation";
 import { useRegister } from "@/core/queries/auth.queries";
-import { useAuthStore } from "@/core/store/auth.store";
 
 interface Errors {
   name?: string;
@@ -20,8 +19,8 @@ interface Errors {
 
 export default function RegisterPage() {
   const route = useRouter();
-  const { mutate, isPending } = useRegister();
-  const setEmailForOtp = useAuthStore((s) => s.setEmailForOtp);
+  const { isPending } = useRegister();
+  // const setEmailForOtp = useAuthStore((s) => s.setEmailForOtp);
 
   const [showPwd, setShowPwd] = useState(false);
   const [showCPwd, setShowCPwd] = useState(false);
@@ -103,27 +102,27 @@ export default function RegisterPage() {
     }
 
     // ✅ success
-    // route.replace("/verify-otp");
+    route.replace("/verify-otp");
 
     // 🔥 REGISTER API CALL
-    mutate(
-      {
-        name: form.name,
-        email: form.email,
-        password: form.password,
-      },
-      {
-        onSuccess: () => {
-          setEmailForOtp(form.email);
-          route.replace("/verify-otp");
-        },
-        onError: (err: any) => {
-          setErrors({
-            email: err?.message || "Registration failed",
-          });
-        },
-      }
-    );
+    // mutate(
+    //   {
+    //     name: form.name,
+    //     email: form.email,
+    //     password: form.password,
+    //   },
+    //   {
+    //     onSuccess: () => {
+    //       setEmailForOtp(form.email);
+    //       route.replace("/verify-otp");
+    //     },
+    //     onError: (err: any) => {
+    //       setErrors({
+    //         email: err?.message || "Registration failed",
+    //       });
+    //     },
+    //   }
+    // );
   };
 
   return (

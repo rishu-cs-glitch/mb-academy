@@ -3,14 +3,13 @@
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/core/store/auth.store";
 import { useVerifyOtp } from "@/core/queries/auth.queries";
 
 export default function VerifyOtpPage() {
   const router = useRouter();
-  const { mutate, isPending } = useVerifyOtp();
+  const { isPending } = useVerifyOtp();
 
-  const email = useAuthStore((s) => s.emailForOtp);
+  // const email = useAuthStore((s) => s.emailForOtp);
 
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [error, setError] = useState("");
@@ -58,27 +57,27 @@ export default function VerifyOtpPage() {
       setError("Please enter all 6 digits of the OTP");
       return;
     }
-
-    mutate(
-      {
-        otp: code,
-        email: email || "", // (agar backend ko chahiye)
-      },
-      {
-        onSuccess: (res: any) => {
-          console.log("res---verify otp res--", JSON.stringify(res));
-          // 🔑 Backend response ke basis par route
-          if (res?.needsProfileSetup) {
-            router.replace("/profile-setup");
-          } else {
-            router.replace("/dashboard");
-          }
-        },
-        onError: (err: any) => {
-          setError(err?.message || "Invalid or expired OTP");
-        },
-      }
-    );
+    router.replace("/register");
+    // mutate(
+    //   {
+    //     otp: code,
+    //     email: email || "", // (agar backend ko chahiye)
+    //   },
+    //   {
+    //     onSuccess: (res: any) => {
+    //       console.log("res---verify otp res--", JSON.stringify(res));
+    //       // 🔑 Backend response ke basis par route
+    //       if (res?.needsProfileSetup) {
+    //         router.replace("/profile-setup");
+    //       } else {
+    //         router.replace("/dashboard");
+    //       }
+    //     },
+    //     onError: (err: any) => {
+    //       setError(err?.message || "Invalid or expired OTP");
+    //     },
+    //   }
+    // );
   };
 
   return (
