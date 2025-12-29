@@ -57,7 +57,7 @@ export default function VerifyOtpPage() {
       setError("Please enter all 6 digits of the OTP");
       return;
     }
-    router.replace("/register");
+    router.replace("/profile-setup");
     // mutate(
     //   {
     //     otp: code,
